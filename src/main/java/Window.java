@@ -1,16 +1,9 @@
-import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Serial;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 
 public class Window extends JFrame {
 
@@ -33,7 +26,6 @@ public class Window extends JFrame {
         // SET NEW ICON
         Image FrameIcon = Toolkit.getDefaultToolkit().getImage("D:\\Icon.png");
         setIconImage(FrameIcon);
-
 
         // TEXTFIELDS
         FileName = new JTextField();
@@ -61,11 +53,12 @@ public class Window extends JFrame {
         create.setSize(90, 30);
         create.setLocation(30, 250);
         create.addActionListener(e -> {
+            generateQRCode qrCode;
             try {
-                generateQRCodeImage(QRCodeInput.getText(), FileName.getText());
-                System.out.println("QR Code Generated");
-            } catch (WriterException | IOException e1) {
-                e1.printStackTrace();
+                qrCode = new generateQRCode(QRCodeInput.getText(), FileName.getText());
+                QRCode.setIcon(qrCode.newIcon);
+            } catch (IOException | WriterException ioException) {
+                ioException.printStackTrace();
             }
         });
 
@@ -77,18 +70,4 @@ public class Window extends JFrame {
         add(create);
         add(QRCode);
     }
-
-    private void generateQRCodeImage(String text, String filePath)
-            throws WriterException, IOException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
-
-        Path path = FileSystems.getDefault().getPath(filePath + ".png");
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-
-        BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
-        ImageIcon newIcon = new ImageIcon(image);
-        QRCode.setIcon(newIcon);
-    }
-
 }
