@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.Serial;
+import java.util.Arrays;
 
 public class Window extends JFrame {
 
@@ -63,11 +64,13 @@ public class Window extends JFrame {
         });
 
         // ADD WIDGETS
-        add(FileName);
-        add(QRCodeInput);
-        add(fileNameLabel);
-        add(QRCodeInputLabel);
+        for (JLabel label : Arrays.asList(QRCodeInputLabel, fileNameLabel, QRCode)) {
+            add(label);
+        }
+        for (JTextField textile : Arrays.asList(FileName, QRCodeInput)) {
+            add(textile);
+        }
+
         add(create);
-        add(QRCode);
     }
 }
