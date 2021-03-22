@@ -19,6 +19,10 @@ public class Window extends JFrame {
     private static JLabel QRCode;
 
     public Window() {
+        MakeWindow();
+    }
+
+    public void MakeWindow() {
         setLayout(null);
         setSize(650, 500);
         setTitle("QR Code Generator ~ Made by Hennes");
@@ -64,11 +68,8 @@ public class Window extends JFrame {
         });
 
         // ADD WIDGETS
-        for (JLabel label : Arrays.asList(QRCodeInputLabel, fileNameLabel, QRCode)) {
-            add(label);
-        }
-        for (JTextField textile : Arrays.asList(FileName, QRCodeInput)) {
-            add(textile);
+        for (Object objs : Arrays.asList(QRCodeInputLabel, QRCode, QRCodeInput, FileName, fileNameLabel)) {
+            add((Component) objs);
         }
 
         add(create);
